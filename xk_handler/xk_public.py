@@ -90,7 +90,7 @@ dhcp-option=15,%s\n''' % (d['xk_dhcp_pool_start'],d['xk_dhcp_pool_stop'],d['xk_d
                 self.db.execute("delete from xk_record where did = %s",id)
                 # 删除域名
                 self.db.execute("delete from xk_domain where id = %s",id)
-                self.redirect("/domain")
+                self.redirect("/dns/domain")
         elif module == "dnsmasq":  # 同步解析
             if fun == "update": # 从数据库更新配置文件并重新加载服务
                 records = self.db.query("select r.record,d.domain,r.value,d.file,d.file_md5,r.type,r.priority from xk_record as r left join xk_domain as d on r.did = d.id where r.status = 'yes' and d.status = 'yes' and r.did = %s order by d.domain,inet_aton(r.value)",id)
